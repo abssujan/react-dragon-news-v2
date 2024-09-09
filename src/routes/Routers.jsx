@@ -5,6 +5,7 @@ import Login from "../pages/Shared/Login/Login";
 import Register from "../pages/Shared/Register/Register";
 import News from "../pages/News/News";
 import PrivateRoute from "./PrivateRoute";
+import Category from "../pages/Category/Category";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element:<Register></Register>
+            },
+            {
+                path:'/category/:id',
+                element: <Category></Category>
             }
         ]
     }

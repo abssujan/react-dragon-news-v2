@@ -1,32 +1,57 @@
 import { Link } from "react-router-dom";
 
 const NewsCard = ({ news }) => {
-  const { title, image_url, details, _id  } = news;
-    // Function to limit details to 50 words
-    const truncateDetails = (text, wordLimit) => {
-        return (
-          text.split(" ").slice(0, wordLimit).join(" ") +
-          (text.split(" ").length > wordLimit ? "..." : "")
-        );
-      };
+  const { title, image_url, details, _id, rating, total_view } = news;
+  // Function to limit details to 50 words
+  const truncateDetails = (text, wordLimit) => {
+    return (
+      text.split(" ").slice(0, wordLimit).join(" ") +
+      (text.split(" ").length > wordLimit ? "..." : "")
+    );
+  };
+  // Function to render stars based on the rating
+  const renderStars = (rating) => {
+    const fullStars = Math.floor(rating);
+    const halfStars = rating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStars;
+
+    return (
+      <>
+        {/* Full Stars */}
+        {[...Array(fullStars)].map((_, index) => (
+          <span key={index} className="text-yellow-500 text-lg">
+            ★
+          </span>
+        ))}
+        {/* Half Star */}
+        {halfStars === 1 && <span className="text-yellow-500 text-lg">☆</span>}
+        {/* Empty Stars */}
+        {[...Array(emptyStars)].map((_, index) => (
+          <span key={index} className="text-gray-300 text-lg">
+            ★
+          </span>
+        ))}
+      </>
+    );
+  };
   return (
     <div>
-      <div className=" mb-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className=" mb-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-100 dark:border-gray-700">
         <a href="#">
-          <img
-            className="rounded-t-lg"
-            src={image_url}
-            alt=""
-          />
+          <img className="rounded-t-lg" src={image_url} alt="" />
         </a>
         <div className="p-5">
-          <a href="#">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <div className="mb-4">
+            <Link
+              to={`/news/${_id}`}
+              className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
+            >
               {title}
-            </h5>
-          </a>
+            </Link>
+          </div>
+
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {truncateDetails(details, 80)}
+            {truncateDetails(details, 80)}
           </p>
           <Link
             to={`/news/${_id}`}
@@ -49,6 +74,21 @@ const NewsCard = ({ news }) => {
               />
             </svg>
           </Link>
+        </div>
+        <div className="flex items-center justify-between px-5 py-5 border-t">
+          {/* rating */}
+          <div className="rating flex items-center ">
+            <div className="flex items-center">
+              {renderStars(rating.number)}
+            </div>
+            <span className="ml-2 text-gray-600 text-lg">
+              {rating.number} ({rating.badge})
+            </span>
+          </div>
+          {/*  */}
+          <div className="text-gray-600 text-sm">
+            Total views: <span className="font-semibold">{total_view}</span>
+          </div>
         </div>
       </div>
     </div>

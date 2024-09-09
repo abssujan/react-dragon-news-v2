@@ -36,7 +36,7 @@ const NavBar = () => {
                   </li>
                   <li>
                     <NavLink
-                      to="/about"
+                      to="/register"
                       className="px-4 opacity-50 hover:opacity-100"
                       href="#"
                     >
@@ -45,7 +45,7 @@ const NavBar = () => {
                   </li>
                   <li>
                     <NavLink
-                      to="/about"
+                      to="/"
                       className="px-4 opacity-50 hover:opacity-100"
                       href="#"
                     >
